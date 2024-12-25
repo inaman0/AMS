@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration</title>
+</head>
+<body>
+    <h1>Course Registration</h1>
+    <p>Department: <%= department %></p>
+    <p>Semester: <%= semester %></p>
+
+    <form id="course-form" action="/registration" method="POST">
+        <div id="course-list">
+            <p>Loading courses...</p>
+        </div>
+        <input type="hidden" name="user_id" value="<%= userId %>"> <!-- Hidden input to pass userId -->
+        <button type="submit">Register</button>
+    </form>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+        const department = '<%= department %>';
+        const semester = '<%= semester %>';
+
+        try {
+            const response = await fetch(`/get-courses?department=${department}&semester=${semester}`);
+            const courses = await response.json();
+
+            const courseListDiv = document.getElementById('course-list');
+            courseListDiv.innerHTML = '';  // Clear the "Loading courses..." message
+
+            courses.forEach(course => {
+                // Create a div for each course with a checkbox
+                const courseDiv = document.createElement('div');
+                courseDiv.innerHTML = `
+                    <label>
+                        <input type="checkbox" name="course_id[]" value="${course.course_id}">
+                        ${course.course_name} - ${course.course_code}
+                    </label>
+                `;
+                courseListDiv.appendChild(courseDiv);
+            });
+        } catch (error) {
+            console.error('Error loading courses:', error);
+            alert('Failed to load courses.');
+        }
+    });
+
+    </script>
+</body>
+</html>
