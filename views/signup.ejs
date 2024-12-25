@@ -15,16 +15,66 @@
 
     <!-- Sign Up Form -->
     <form action="/submit-signup" method="POST">
-        <label for="email">Email:</label>
+
+        <input type="radio" id="student" name="role" value="student">
+        <label for="student">student</label>
+
+        <input type="radio" id="teacher" name="role" value="teacher">
+        <label for="teacher">teacher</label><br><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required> <br><br>
+
+        <label for="email">Create Email:</label>
         <input type="email" id="email" name="email" required><br><br>
 
-        <label for="password">Password:</label>
+        <label for="password">Create Password:</label>
         <input type="password" id="password" name="password" required><br><br>
+
+        <label for="dropdown">Department:</label>
+        <select id="dropdown" name="dropdown">
+            <option value="" disabled selected>Select an option</option>
+            <option value="SMCS">SMCS</option>
+            <option value="SES">SES</option>
+            <option value="SMS">SMS</option>
+        </select><br><br>
+
+        <!-- Semester input, initially hidden -->
+        <div id="semester-container" style="display: none;">
+            <label for="semester">Semester:</label>
+            <input type="text" id="semester" name="semester"> <br><br>
+        </div>
 
         <button type="submit">Sign Up</button>
     </form>
 
     <br>
     <a href="/">Already have an account? Login</a>
+    <script> 
+        // Function to toggle visibility of the semester input
+        function toggleSemesterField() {
+            var studentRadio = document.getElementById('student');
+            var semesterField = document.getElementById('semester-container');
+            
+            // Show semester input if student is selected, otherwise hide it
+            if (studentRadio.checked) {
+                semesterField.style.display = 'block';
+            } 
+            else {
+                semesterField.style.display = 'none';
+            }
+        }
+
+        // Ensure the function is called when the page loads and when the radio buttons change
+        window.onload = function() {
+            // Initialize the visibility based on the initial state of the radio buttons
+            toggleSemesterField(); 
+
+            var radios = document.getElementsByName('role');
+            for (var i = 0; i < radios.length; i++) {
+                radios[i].addEventListener('change', toggleSemesterField);
+            }
+        };
+    </script>
 </body>
 </html>
