@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 
 // Handle login
 app.post('/submit-user', (req, res) => {
-    const userId = req.session.userId;
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -49,11 +48,23 @@ app.post('/submit-user', (req, res) => {
 
         if (results.length > 0) {
             // Login successful
-            req.session.userId=results[0].id;
-            res.redirect("/registration");
+            const user = results[0];
+            req.session.userId = user.id;
+            req.session.department = user.department; // Assuming department is a field in your users table
+            req.session.semester = user.semester; // Assuming semester is a field in your users table
+            req.session.name = user.name;
+            req.session.role = user.role; // Assuming role is a field in your users table
+
+            if (user.role === 'student') {
+                return res.redirect('/s_home');
+            } else if (user.role === 'teacher') {
+                return res.redirect('/t_home');
+            } else {
+                return res.status(403).send('Unauthorized role.');
+            }
         } else {
             // Invalid credentials
-            res.render('index', { error: 'Invalid email or password.' });
+            return res.render('index', { error: 'Invalid email or password.' });
         }
     });
 });
@@ -94,103 +105,252 @@ app.post('/submit-signup', (req, res) => {
             }
 
             // Redirect to login page after successful sign-up
-            res.redirect("/login");
+            res.redirect("/");
         });
     });
 });
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-// Render the course registration form
-app.get('/registration', (req, res) => {
-    const userId = req.session.userId;  // Assuming the user ID is stored in the session
-
-    if (!userId) {
-        return res.status(401).send('User not logged in.');
+// Render homepage after login
+app.get('/s_home', (req, res) => {
+    if (!req.session.userId) {
+        return res.redirect('/'); // Redirect to login if user is not logged in
     }
 
-    // Query the database for the student's department and semester based on their userId
-    const sql = 'SELECT department, semester FROM users WHERE id = ?';
-    connection.query(sql, [userId], (err, results) => {
+    // Get user info from the session
+    const user = {
+        name: req.session.name, // Assuming `name` is stored in the session
+        department: req.session.department,
+        semester: req.session.semester,
+    };
+
+    res.render('s_home', { user });
+});
+
+app.get('/t_home', (req, res) => {
+    if (!req.session.userId) {
+        return res.redirect('/'); // Redirect to login if user is not logged in
+    }
+
+    // Get user info from the session
+    const user = {
+        name: req.session.name, // Assuming `name` is stored in the session
+        department: req.session.department,
+    };
+
+    res.render('t_home', { user });
+});
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
+// Render the course registration form
+app.get('/get-courses', (req, res) => {
+    const department = req.session.department; // Get department from session
+    const semester = req.session.semester; // Get semester from session
+
+    if (!department || !semester) {
+        return res.status(400).send('Department and semester are required.');
+    }
+
+    const courseSql = 'SELECT course_id, course_name, course_code, credits FROM course WHERE department = ? AND semester = ?';
+    connection.query(courseSql, [department, semester], (err, results) => {
         if (err) {
-            console.error('Error fetching user details:', err);
-            return res.status(500).send('Error fetching user details.');
+            console.error('Error fetching courses:', err);
+            return res.status(500).send('Error fetching courses.');
         }
 
-        if (results.length === 0) {
-            return res.status(404).send('User not found.');
-        }
-
-        const { department, semester } = results[0];
-
-        // Query the courses based on department and semester
-        const coursesSql = 'SELECT * FROM course WHERE department = ? AND semester = ?';
-        connection.query(coursesSql, [department, semester], (err, courseResults) => {
-            if (err) {
-                console.error('Error fetching courses:', err);
-                return res.status(500).send('Error fetching courses.');
-            }
-
-            // Create HTML options for courses
-            let options = '<option value="">Select a course</option>';
-            courseResults.forEach(course => {
-                options += `<option value="${course.course_id}">${course.course_id} - ${course.course_name}</option>`;
-            });
-
-            // Send the course options as part of the response
-            res.send(options);
+        // Render the course registration page with the list of courses
+        res.render('s_registration', { 
+            courses: results,
+            userId: req.session.userId,
         });
     });
 });
 
-// Handle course registration
-app.post('/registration', (req, res) => {
-    const user_id = req.body.user_id;
-    const course_ids = req.body.course_id;  // course_id is an array
 
-    if (!user_id || !course_ids || course_ids.length === 0) {
-        return res.status(400).send('Student ID and at least one course ID are required.');
+// Handle course registration
+app.post('/submit-registration', (req, res) => {
+    const userId = req.body.user_id;
+    const courseIds = req.body.course_id; // FormData sends an array for checkboxes
+
+    if (!userId || !courseIds || courseIds.length === 0) {
+        return res.redirect('/get-courses');
     }
 
-    // Check if the student exists
-    const checkSql = `
-        SELECT 
-            (SELECT COUNT(*) FROM users WHERE id = ? AND role = 'student') AS student_exists
+    const courseIdsArray = Array.isArray(courseIds) ? courseIds : [courseIds];
+    const values = courseIdsArray.map(courseId => [userId, courseId]);
+
+    // Check for duplicates and fetch course codes
+    const checkDuplicatesSql = `
+        SELECT c.course_code 
+        FROM registration r
+        JOIN course c ON r.course_id = c.course_id
+        WHERE r.user_id = ? AND r.course_id IN (?);
     `;
-    connection.query(checkSql, [user_id], (err, results) => {
+
+    connection.query(checkDuplicatesSql, [userId, courseIdsArray], (err, results) => {
         if (err) {
-            console.error('Error querying the database:', err);
-            return res.status(500).send('An error occurred while processing your request.');
+            console.error('Error checking for duplicates:', err);
+            return res.status(500).send('An error occurred while checking for duplicate registrations.');
         }
 
-        const { student_exists } = results[0];
-        if (!student_exists) {
-            return res.render('registration', { error: 'Student does not exist.' });
+        if (results.length > 0) {
+            const duplicateCourses = results.map(row => row.course_code).join(', ');
+            return res.status(400).send(`
+                <h1>Failed to register courses.</h1>
+                <p>You have already registered for the following courses: ${duplicateCourses}</p>
+                <a href="/get-courses">Back to Course Registration</a>
+            `);
         }
 
-        // Insert the course registrations for each selected course
-        const insertPromises = course_ids.map(course_id => {
-            return new Promise((resolve, reject) => {
-                const insertSql = 'INSERT INTO registration (user_id, course_id) VALUES (?, ?)';
-                connection.query(insertSql, [user_id, course_id], (err) => {
-                    if (err) {
-                        reject('Error inserting registration for course ' + course_id);
-                    } else {
-                        resolve();
-                    }
-                });
-            });
+        // Insert new registrations if no duplicates
+        const insertSql = 'INSERT INTO registration (user_id, course_id) VALUES ?';
+
+        connection.query(insertSql, [values], (err) => {
+            if (err) {
+                console.error('Error inserting registrations:', err);
+                return res.status(500).send('Failed to register courses. Please try again.');
+            }
+
+            res.send(`
+                <h1>Courses registered successfully!</h1>
+                <a href="/s_home">Back to Homepage</a>
+            `);
         });
+    });
+});
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
+app.get('/feedback', (req, res) => {
+    if (!req.session.userId) {
+        return res.redirect('/'); // Redirect to login page if user is not logged in
+    }
 
-        // Wait for all insertions to complete
-        Promise.all(insertPromises)
-            .then(() => {
-                res.send('Courses registered successfully!');
-            })
-            .catch(error => {
-                console.error(error);
-                res.status(500).send('An error occurred while registering the courses.');
-            });
+    const userId = req.session.userId;
+    const department = req.session.department;
+    const semester = req.session.semester;
+
+    // Get the list of courses the student is enrolled in but has not submitted feedback for
+    const courseSql = `
+    SELECT c.course_id, c.course_name, c.course_code
+    FROM course c
+    JOIN registration r ON c.course_id = r.course_id
+    LEFT JOIN feedback f ON f.user_id = r.user_id AND f.course_id = r.course_id
+    WHERE r.user_id = ? 
+      AND c.department = ? 
+      AND c.semester = ?
+      AND f.user_id IS NULL
+`;
+
+
+    connection.query(courseSql, [userId, department, semester], (err, courses) => {
+        if (err) {
+            console.error('Error fetching courses:', err);
+            return res.status(500).send('An error occurred while fetching courses.');
+        }
+
+        res.render('s_feedback', { user: req.session, courses });
+    });
+});
+
+app.post('/submit-feedback', (req, res) => {
+    // Use userId from session
+    const userId = req.session.userId;  // This is the correct way to get the userId from the session
+
+    if (!userId) {
+        return res.status(400).send('User not logged in.');
+    }
+
+    const feedbackData = [];
+
+    // Loop through all the course IDs to capture feedback
+    for (let key in req.body) {
+        if (key.startsWith('rating_')) {
+            const courseId = key.split('_')[1];
+            const rating = req.body[key];
+            const comments = req.body[`feedback_${courseId}`] || ''; // Get feedback text
+
+            // Ensure rating is a number between 1 and 5
+            if (isNaN(rating) || rating < 1 || rating > 5) {
+                return res.status(400).send('Invalid rating. Please select a number between 1 and 5.');
+            }
+
+            feedbackData.push({ userId, courseId, rating, comments });
+        }
+    }
+
+    if (feedbackData.length === 0) {
+        return res.status(400).send('No feedback data provided.');
+    }
+
+    // Check if the user has already submitted feedback for any of the courses
+    const checkDuplicatesSql = `
+        SELECT * FROM feedback 
+        WHERE user_id = ? AND course_id IN (?);
+    `;
+
+    const courseIds = feedbackData.map(feedback => feedback.courseId);
+
+    connection.query(checkDuplicatesSql, [userId, courseIds], (err, results) => {
+        if (err) {
+            console.error('Error checking for duplicates:', err);
+            return res.status(500).send('An error occurred while checking for duplicate feedback.');
+        }
+
+        // If feedback already exists for any course, prevent insertion
+        if (results.length > 0) {
+            const duplicateCourses = results.map(row => row.course_id).join(', ');
+            return res.status(400).send(`
+                <p>You have already submitted feedback for the following courses: </p>
+                <a href="/s_home">Back to Homepage</a>
+            `);
+        }
+
+        // Insert feedback if no duplicates exist
+        const insertSql = 'INSERT INTO feedback (user_id, course_id, ratings, comments) VALUES ?';
+        const values = feedbackData.map(f => [f.userId, f.courseId, f.rating, f.comments]);
+
+        connection.query(insertSql, [values], (err) => {
+            if (err) {
+                console.error('Error inserting feedback:', err);
+                return res.status(500).send('An error occurred while submitting your feedback.');
+            }
+
+            res.send('<h1>Feedback Submitted Successfully!</h1><a href="/s_home">Back to Homepage</a>');
+        });
+    });
+});
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
+app.get('/history', (req, res) => {
+    const userId = req.session.userId;
+
+    if (!userId) {
+        return res.status(401).send('Unauthorized access.');
+    }
+
+    const sql = `
+        SELECT r.registration_id,c.course_name, c.course_code, c.credits, r.date
+        FROM registration r
+        JOIN course c ON r.course_id = c.course_id
+        WHERE r.user_id = ?
+        ORDER BY r.date DESC;
+    `;
+
+    connection.query(sql, [userId], (err, results) => {
+        if (err) {
+            console.error('Error fetching course history:', err);
+            return res.status(500).send('An error occurred while fetching course history.');
+        }
+
+        res.render('s_history', { history: results });
+    });
+});
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------*/
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error during logout:', err);
+            return res.status(500).send('Failed to log out.');
+        }
+        res.redirect('/'); // Redirect to login page after logout
     });
 });
 

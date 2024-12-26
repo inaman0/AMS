@@ -1,0 +1,24 @@
+<h1>Course Feedback</h1>
+<form method="POST" action="/submit-feedback">
+    <% courses.forEach(course => { %>
+        <div>
+            <h3><%= course.course_name %> - <%= course.course_code %></h3>
+            <label for="rating_<%= course.course_id %>">Rating:</label>
+            <select name="rating_<%= course.course_id %>" required>
+                <option value="">Select Rating</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <br>
+            <label for="feedback_<%= course.course_id %>">Comments:</label>
+            <textarea name="feedback_<%= course.course_id %>" rows="4" cols="50"></textarea>
+        </div>
+        <br>
+    <% }) %>
+
+    <button type="submit">Submit Feedback</button>
+    <a href="/s_home">Homepage</a>
+</form>

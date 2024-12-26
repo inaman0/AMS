@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <p>Name: <%= user.name %></p>
+    <p>Department: <%= user.department %></p>
+    <p>Semester: <%= user.semester %></p>
+    <div>
+        <button onclick="window.location.href='/get-courses'">Course Registration</button>
+        <button onclick="window.location.href='/feedback'">Feedback</button>
+        <button onclick="window.location.href='/history'">Registered courses</button>
+    </div>
+
+    <div>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
