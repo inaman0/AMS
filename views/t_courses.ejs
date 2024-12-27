@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses</title>
+</head>
+<body>
+    <h1>Courses Taught</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Course Code</th>
+                <th>Credits</th>
+                <th>Semester</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (courses.length === 0) { %>
+                <tr>
+                    <td colspan="5">No courses assigned.</td>
+                </tr>
+            <% } else { %>
+                <% courses.forEach(course => { %>
+                    <tr>
+                        <td><%= course.course_name %></td>
+                        <td><%= course.course_code %></td>
+                        <td><%= course.credits %></td>
+                        <td><%= course.semester %></td>
+                        <td><%= course.department %></td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+    <a href="/t_home">Homepage</a>
+</body>
+</html>

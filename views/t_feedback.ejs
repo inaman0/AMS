@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+</head>
+<body>
+    <h1>Student Feedback</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Course Code</th>
+                <th>Student ID</th>
+                <th>Comments</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (feedbacks.length === 0) { %>
+                <tr>
+                    <td colspan="5">No feedback available.</td>
+                </tr>
+            <% } else { %>
+                <% feedbacks.forEach(feedback => { %>
+                    <tr>
+                        <td><%= feedback.course_name %></td>
+                        <td><%= feedback.course_code %></td>
+                        <td><%= feedback.user_id %></td>
+                        <td><%= feedback.comments %></td>
+                        <td><%= feedback.ratings %></td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+    <a href="/t_home">Homepage</a>
+</body>
+</html>

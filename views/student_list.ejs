@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Students</title>
+</head>
+<body>
+    <h1>Grade Students for Course</h1>
+    <form action="/submit-results" method="POST">
+        <input type="hidden" name="courseId" value="<%= courseId %>">
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Grade</th>
+            </tr>
+            <% students.forEach(student => { %>
+                <tr>
+                    <td><%= student.student_name %></td>
+                    <td><%= student.email %></td>
+                    <td>
+                        <input type="text" name="grades[<%= student.email %>]" required>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+        <button type="submit">Submit Grades</button>
+    </form>
+    <a href="/t_home">Homepage</a>
+</body>
+</html>

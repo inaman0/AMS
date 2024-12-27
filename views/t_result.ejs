@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Course</title>
+</head>
+<body>
+    <h1>Select a Course</h1>
+    <form action="/view-students" method="GET">
+        <label for="course">Choose a course:</label>
+        <select id="course" name="courseId" required>
+            <% courses.forEach(course => { %>
+                <option value="<%= course.course_id %>">
+                    <%= course.course_name %> (<%= course.course_code %>)
+                </option>
+            <% }) %>
+        </select>
+        <button type="submit">View Students</button>
+    </form>
+</body>
+</html>
