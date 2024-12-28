@@ -4,37 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
+    <link rel="stylesheet" href="t_feedback.css"> <!-- Assuming your CSS is in styles.css -->
 </head>
 <body>
-    <h1>Student Feedback</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Course Name</th>
-                <th>Course Code</th>
-                <th>Student ID</th>
-                <th>Comments</th>
-                <th>Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (feedbacks.length === 0) { %>
+    <div class="container">
+        <h1 class="heading">Student Feedback</h1>
+        <table class="feedback-table" border="2">
+            <thead>
                 <tr>
-                    <td colspan="5">No feedback available.</td>
+                    <th>Course Name</th>
+                    <th>Course Code</th>
+                    <th>Student ID</th>
+                    <th>Comments</th>
+                    <th>Rating</th>
                 </tr>
-            <% } else { %>
-                <% feedbacks.forEach(feedback => { %>
+            </thead>
+            <tbody>
+                <% if (feedbacks.length === 0) { %>
                     <tr>
-                        <td><%= feedback.course_name %></td>
-                        <td><%= feedback.course_code %></td>
-                        <td><%= feedback.user_id %></td>
-                        <td><%= feedback.comments %></td>
-                        <td><%= feedback.ratings %></td>
+                        <td colspan="5" class="no-feedback">No feedback available.</td>
                     </tr>
-                <% }) %>
-            <% } %>
-        </tbody>
-    </table>
-    <a href="/t_home">Homepage</a>
+                <% } else { %>
+                    <% feedbacks.forEach(feedback => { %>
+                        <tr>
+                            <td><%= feedback.course_name %></td>
+                            <td><%= feedback.course_code %></td>
+                            <td><%= feedback.user_id %></td>
+                            <td><%= feedback.comments %></td>
+                            <td><%= feedback.ratings %></td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+        <a href="/t_home" class="homepage-link">Homepage</a>
+    </div>
 </body>
 </html>

@@ -1,0 +1,122 @@
+/* Container for the entire page */
+.container {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("/images/student.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Styling for the page heading */
+.heading {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+/* Form styling */
+.feedback-form {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for each course feedback */
+.course-feedback {
+    margin-bottom: 20px;
+}
+
+/* Title styling for course names */
+.course-title {
+    color: #34495e;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Styling for the rating container */
+.rating-container {
+    margin-bottom: 10px;
+}
+
+.rating-label {
+    font-size: 1.1em;
+    color: #34495e;
+    margin-right: 10px;
+}
+
+.rating-select {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Styling for the comments container */
+.comments-container {
+    margin-bottom: 20px;
+}
+
+.feedback-label {
+    font-size: 1.1em;
+    color: #34495e;
+    margin-bottom: 5px;
+}
+
+.feedback-textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Centering buttons container */
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Adds space between buttons */
+    margin-top: 30px; /* Adds space before buttons */
+}
+
+/* Styling for the submit button */
+.submit-button {
+    padding: 12px 30px;
+    background-color: #16a085;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px; /* Fixed width */
+    text-align: center;
+}
+
+.submit-button:hover {
+    background-color: #0e7862;
+}
+
+/* Styling for the homepage link */
+.homepage-link {
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 1.1em;
+    text-align: center;
+    width: 200px; /* Fixed width */
+    display: inline-block;
+}
+
+.homepage-link:hover {
+    text-decoration: underline;
+}

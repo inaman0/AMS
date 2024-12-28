@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration History</title>
+    <link rel="stylesheet" href="s_history.css"> <!-- Link to the external CSS -->
 </head>
-<body>
-    <h1>Course Registration History</h1>
-    <table>
+<body class="container">
+    <h1 class="heading">Course Registration History</h1>
+    <table class="history-table">
         <thead>
             <tr>
                 <th>Course Name</th>
-                <th>Course Code </th>
+                <th>Course Code</th>
                 <th>Credits</th>
             </tr>
         </thead>
@@ -31,6 +32,6 @@
             <% } %>
         </tbody>
     </table>
-    <a href="/s_home"> Homepage </a>
+    <a href="/s_home" class="homepage-link">Homepage</a>
 </body>
 </html>

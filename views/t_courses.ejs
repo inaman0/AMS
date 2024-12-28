@@ -4,37 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Courses</title>
+    <link rel="stylesheet" href="t_courses.css"> <!-- Assuming your CSS is in styles.css -->
 </head>
 <body>
-    <h1>Courses Taught</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Course Name</th>
-                <th>Course Code</th>
-                <th>Credits</th>
-                <th>Semester</th>
-                <th>Department</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (courses.length === 0) { %>
+    <div class="container">
+        <h1 class="heading">Courses Taught</h1>
+        <table class="courses-table" border="2">
+            <thead>
                 <tr>
-                    <td colspan="5">No courses assigned.</td>
+                    <th>Course Name</th>
+                    <th>Course Code</th>
+                    <th>Credits</th>
+                    <th>Semester</th>
+                    <th>Department</th>
                 </tr>
-            <% } else { %>
-                <% courses.forEach(course => { %>
+            </thead>
+            <tbody>
+                <% if (courses.length === 0) { %>
                     <tr>
-                        <td><%= course.course_name %></td>
-                        <td><%= course.course_code %></td>
-                        <td><%= course.credits %></td>
-                        <td><%= course.semester %></td>
-                        <td><%= course.department %></td>
+                        <td colspan="5">No courses assigned.</td>
                     </tr>
-                <% }) %>
-            <% } %>
-        </tbody>
-    </table>
-    <a href="/t_home">Homepage</a>
+                <% } else { %>
+                    <% courses.forEach(course => { %>
+                        <tr>
+                            <td><%= course.course_name %></td>
+                            <td><%= course.course_code %></td>
+                            <td><%= course.credits %></td>
+                            <td><%= course.semester %></td>
+                            <td><%= course.department %></td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+        <a href="/t_home" class="homepage-link">Homepage</a>
+    </div>
 </body>
 </html>

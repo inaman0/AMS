@@ -4,27 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="login.css">
 </head>
-<body>
-    <h1>Login</h1>
+<body class="body-container">
+    <div class="form-container">
+        <h1 class="heading">Login</h1>
+        <form action="/submit-user" method="POST">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" name="email" class="form-input" required>
 
-    <!-- Display error message -->
-    
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" name="password" class="form-input" required>
+            
+            <div id="error-message" class="error-message">
+                <%= error || '' %>
+            </div>
 
-    <form action="/submit-user" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        
-        <div id="error-message" style="color: red; <%= error ? 'display: block;' : 'display: none;' %>">
-            <%= error || '' %>
-        </div>
-
-        <button type="submit">Submit</button>
-        <a href="/signup">signup</a>
-    </form>
-    
+            <button type="submit" class="form-button">Submit</button>
+            <a href="/signup" class="link">Sign Up</a>
+        </form>
+    </div>
 </body>
 </html>

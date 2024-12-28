@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Results</title>
+    <link rel="stylesheet" href="s_result.css"> <!-- Link to external CSS -->
 </head>
-<body>
-    <h1>Your Results</h1>
+<body class="container">
+    <h1 class="heading">Your Result</h1>
+
     <% if (results.length === 0) { %>
-        <p>No results found for this student.</p>
+        <p class="no-results">No results found for this student.</p>
     <% } else { %>
-        <table border="1">
+        <table class="results-table">
             <thead>
                 <tr>
                     <th>Course Name</th>
@@ -27,6 +29,7 @@
             </tbody>
         </table>
     <% } %>
-    <a href="/t_home">Back to Homepage</a>
+
+    <a href="/s_home" class="back-link">Back to Homepage</a>
 </body>
 </html>

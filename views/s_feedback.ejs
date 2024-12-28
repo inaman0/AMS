@@ -1,24 +1,42 @@
-<h1>Course Feedback</h1>
-<form method="POST" action="/submit-feedback">
-    <% courses.forEach(course => { %>
-        <div>
-            <h3><%= course.course_name %> - <%= course.course_code %></h3>
-            <label for="rating_<%= course.course_id %>">Rating:</label>
-            <select name="rating_<%= course.course_id %>" required>
-                <option value="">Select Rating</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <br>
-            <label for="feedback_<%= course.course_id %>">Comments:</label>
-            <textarea name="feedback_<%= course.course_id %>" rows="4" cols="50"></textarea>
-        </div>
-        <br>
-    <% }) %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Feedback</title>
+    <link rel="stylesheet" href="s_feedback.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Course Feedback</h1>
+        <form method="POST" action="/submit-feedback" class="feedback-form">
+            <% courses.forEach(course => { %>
+                <div class="course-feedback">
+                    <h3 class="course-title"><%= course.course_name %> - <%= course.course_code %></h3>
+                    <div class="rating-container">
+                        <label for="rating_<%= course.course_id %>" class="rating-label">Rating:</label>
+                        <select name="rating_<%= course.course_id %>" class="rating-select" required>
+                            <option value="">Select Rating</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="comments-container">
+                        <label for="feedback_<%= course.course_id %>" class="feedback-label">Comments:</label>
+                        <textarea name="feedback_<%= course.course_id %>" rows="4" class="feedback-textarea"></textarea>
+                    </div>
+                </div>
+                <br>
+            <% }) %>
 
-    <button type="submit">Submit Feedback</button>
-    <a href="/s_home">Homepage</a>
-</form>
+            <div class="buttons-container">
+                <button type="submit" class="submit-button">Submit Feedback</button>
+                <a href="/s_home" class="homepage-link">Homepage</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

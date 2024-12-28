@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <link rel="stylesheet" href="t_home.css"> <!-- Assuming the CSS is in styles.css -->
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <p>Name: <%= user.name %></p>
-    <p>Department: <%= user.department %></p>
-    <div>
-        
-    </div>
-        <button onclick="window.location.href='/get-courses-teacher'">Courses</button>
-        <button onclick="window.location.href='/add-course'">Add Course</button>
-        <button onclick="window.location.href='/get-feedback'">View Feedback</button>
-        <button onclick="window.location.href='/select-course'">Result</button>
-    <div>
-        <a href="/logout">Logout</a>
+    <div class="container">
+        <h1 class="heading">Welcome to the Home Page</h1>
+        <div class="user-info">
+            <p>Name: <%= user.name %></p>
+            <p>Department: <%= user.department %></p>
+        </div>
+        <div class="buttons-container">
+            <button class="button" onclick="window.location.href='/get-courses-teacher'">Courses</button>
+            <button class="button" onclick="window.location.href='/add-course'">Add Course</button>
+            <button class="button" onclick="window.location.href='/get-feedback'">View Feedback</button>
+            <button class="button" onclick="window.location.href='/select-course'">Result</button>
+        </div>
+
+        <div class="logout-container">
+            <a href="/logout" class="logout-link">Logout</a>
+        </div>
     </div>
 </body>
 </html>

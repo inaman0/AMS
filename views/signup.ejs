@@ -4,71 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link rel="stylesheet" href="signup.css">
 </head>
-<body>
-    <h1>Sign Up</h1>
+<body class="body-container">
+    <div class="form-container">
+        <h1 class="heading">Sign Up</h1>
 
-    <!-- Display error message -->
-    <div id="error-message" style="color: red; <%= error ? 'display: block;' : 'display: none;' %>">
-        <%= error || '' %>
-    </div>
-
-    <!-- Sign Up Form -->
-    <form action="/submit-signup" method="POST">
-
-        <input type="radio" id="student" name="role" value="student">
-        <label for="student">student</label>
-
-        <input type="radio" id="teacher" name="role" value="teacher">
-        <label for="teacher">teacher</label><br><br>
-
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required> <br><br>
-
-        <label for="email">Create Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="password">Create Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <label for="dropdown">Department:</label>
-        <select id="dropdown" name="dropdown">
-            <option value="" disabled selected>Select an option</option>
-            <option value="SMCS">SMCS</option>
-            <option value="SES">SES</option>
-            <option value="SMS">SMS</option>
-        </select><br><br>
-
-        <!-- Semester input, initially hidden -->
-        <div id="semester-container" style="display: none;">
-            <label for="semester">Semester:</label>
-            <input type="text" id="semester" name="semester"> <br><br>
+        <!-- Display error message -->
+        <div id="error-message" class="error-message <%= error ? 'active' : '' %>">
+            <%= error || '' %>
         </div>
 
-        <button type="submit">Sign Up</button>
-    </form>
+        <!-- Sign Up Form -->
+        <form action="/submit-signup" method="POST">
 
-    <br>
-    <a href="/">Already have an account? Login</a>
-    <script> 
+            <input type="radio" id="student" name="role" value="student" class="form-radio">
+            <label for="student" class="form-label-inline">Student</label>
+
+            <input type="radio" id="teacher" name="role" value="teacher" class="form-radio">
+            <label for="teacher" class="form-label-inline">Teacher</label><br><br>
+
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" id="name" name="name" class="form-input" required>
+
+            <label for="email" class="form-label">Create Email:</label>
+            <input type="email" id="email" name="email" class="form-input" required>
+
+            <label for="password" class="form-label">Create Password:</label>
+            <input type="password" id="password" name="password" class="form-input" required>
+
+            <label for="dropdown" class="form-label">Department:</label>
+            <select id="dropdown" name="dropdown" class="form-select">
+                <option value="" disabled selected>Select an option</option>
+                <option value="SMCS">SMCS</option>
+                <option value="SES">SES</option>
+                <option value="SMS">SMS</option>
+            </select>
+
+            <!-- Semester input -->
+            <div id="semester-container" class="semester-container">
+                <label for="semester" class="form-label">Semester:</label>
+                <input type="text" id="semester" name="semester" class="form-input">
+            </div>
+
+            <button type="submit" class="button">Sign Up</button>
+        </form>
+
+        <a href="/" class="link">Already have an account? Login</a>
+    </div>
+
+    <script>
         // Function to toggle visibility of the semester input
         function toggleSemesterField() {
             var studentRadio = document.getElementById('student');
             var semesterField = document.getElementById('semester-container');
-            
+
             // Show semester input if student is selected, otherwise hide it
             if (studentRadio.checked) {
                 semesterField.style.display = 'block';
-            } 
-            else {
+            } else {
                 semesterField.style.display = 'none';
             }
         }
 
         // Ensure the function is called when the page loads and when the radio buttons change
-        window.onload = function() {
-            // Initialize the visibility based on the initial state of the radio buttons
-            toggleSemesterField(); 
+        window.onload = function () {
+            toggleSemesterField(); // Initialize the visibility based on the initial state of the radio buttons
 
             var radios = document.getElementsByName('role');
             for (var i = 0; i < radios.length; i++) {

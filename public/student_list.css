@@ -1,0 +1,93 @@
+/* Container for the entire page */
+.container {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("/images/teacher.jpg");
+    background-size: cover; /* Ensures the background image covers the entire page */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background image fixed while scrolling */
+}
+
+/* Styling for the page heading */
+.heading {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+/* Form container */
+.results-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Table Styling */
+.students-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    border-color: black;
+}
+
+.students-table th, .students-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    border-color: black;
+}
+
+.students-table th {
+    background-color: #3c5cc3;
+    color: white;
+    border-color: black;
+}
+
+/* Input field for grades */
+.grade-input {
+    width: 100px;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Submit button styling */
+.submit-button {
+    padding: 12px 30px;
+    background-color: #3c5cc3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #2f489d;
+}
+
+/* Homepage link styling */
+.homepage-link {
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+.homepage-link:hover {
+    text-decoration: underline;
+}

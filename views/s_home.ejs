@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <link rel="stylesheet" href="s_home.css">
 </head>
-<body>
-    <h1>Welcome to the Home Page</h1>
-    <p>Name: <%= user.name %></p>
-    <p>Department: <%= user.department %></p>
-    <p>Semester: <%= user.semester %></p>
-    <div>
-        <button onclick="window.location.href='/get-courses'">Course Registration</button>
-        <button onclick="window.location.href='/feedback'">Feedback</button>
-        <button onclick="window.location.href='/history'">Registered courses</button>
-        <button onclick="window.location.href='/results'">Result</button>
+<body class="body-container">
+    <h1 class="heading">Welcome to the Home Page</h1>
+
+    <div class="user-info">
+        <p>Name: <%= user.name %></p>
+        <p>Department: <%= user.department %></p>
+        <p>Semester: <%= user.semester %></p>
     </div>
 
-    <div>
-        <a href="/logout">Logout</a>
+    <div class="buttons-container">
+        <button class="button" onclick="window.location.href='/get-courses'">Course Registration</button>
+        <button class="button" onclick="window.location.href='/feedback'">Feedback</button>
+        <button class="button" onclick="window.location.href='/history'">Registered Courses</button>
+        <button class="button" onclick="window.location.href='/results'">Result</button>
     </div>
+
+    <a href="/logout" class="logout-link">Logout</a>
 </body>
 </html>

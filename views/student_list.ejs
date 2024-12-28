@@ -4,29 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registered Students</title>
+    <link rel="stylesheet" href="student_list.css"> <!-- Assuming your CSS is in styles.css -->
 </head>
 <body>
-    <h1>Grade Students for Course</h1>
-    <form action="/submit-results" method="POST">
-        <input type="hidden" name="courseId" value="<%= courseId %>">
-        <table>
-            <tr>
-                <th>Student Name</th>
-                <th>Email</th>
-                <th>Grade</th>
-            </tr>
-            <% students.forEach(student => { %>
-                <tr>
-                    <td><%= student.student_name %></td>
-                    <td><%= student.email %></td>
-                    <td>
-                        <input type="text" name="grades[<%= student.email %>]" required>
-                    </td>
-                </tr>
-            <% }); %>
-        </table>
-        <button type="submit">Submit Grades</button>
-    </form>
-    <a href="/t_home">Homepage</a>
+    <div class="container">
+        <h1 class="heading">Grade Students for Course</h1>
+        <form action="/submit-results" method="POST" class="results-form">
+            <input type="hidden" name="courseId" value="<%= courseId %>">
+            <table class="students-table" border="2">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% students.forEach(student => { %>
+                        <tr>
+                            <td><%= student.student_name %></td>
+                            <td><%= student.email %></td>
+                            <td>
+                                <input type="text" name="grades[<%= student.email %>]" class="grade-input" required>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <button type="submit" class="submit-button">Submit Grades</button>
+            <a href="/t_home" class="homepage-link">Homepage</a>
+        </form>
+    </div>
 </body>
 </html>

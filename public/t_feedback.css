@@ -1,0 +1,69 @@
+/* Container for the entire page */
+.container {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("/images/teacher.jpg");
+    background-size: cover; /* Ensures the background image covers the entire page */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background image fixed while scrolling */
+}
+
+/* Styling for the page heading */
+.heading {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+}
+
+/* Styling for the feedback table */
+.feedback-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    border-color: black;
+}
+
+/* Table header styling */
+.feedback-table th {
+    background-color: #3c5cc3;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 1.1em;
+    border-color: black;
+}
+
+/* Table row styling */
+.feedback-table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    font-size: 1.1em;
+    text-align: left;
+    border-color: black;
+}
+
+/* Styling for the 'No feedback available' message */
+.no-feedback {
+    text-align: center;
+    color: #e74c3c;
+    font-size: 1.2em;
+}
+
+/* Styling for the homepage link */
+.homepage-link {
+    margin-top: 20px;
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+.homepage-link:hover {
+    text-decoration: underline;
+}

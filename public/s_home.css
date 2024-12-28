@@ -1,0 +1,84 @@
+.body-container {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-image: url("/images/student.png");
+    background-size: cover; /* Ensures the background image covers the entire page */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background image fixed while scrolling */
+}
+
+.heading {
+    color: #2c3e50;
+    margin-top: 40px; /* Increased margin from the top */
+    margin-bottom: 50px; /* Space below the heading */
+    font-size: 2.9em;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.user-info {
+    margin-top: 40px;
+    margin-bottom: 50px; /* Increased spacing below user-info */
+    font-size: 1.6em;
+    color: #34495e;
+    text-align: center;
+    line-height: 1.6;
+    background-color: #ecf0f1;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Added more spacing between buttons */
+    margin-top: 40px;
+    margin-bottom: 50px; /* Increased spacing below buttons */
+}
+
+.button {
+    padding: 15px 28px;
+    background-color: #16a085;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.5s ease, background-color 0.5s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+    background-color: #0e7862;
+    transform: translateY(-5px);
+}
+
+.logout-link {
+    color: #ff0000;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-top: 30px; /* Space above the logout link */
+}
+
+.logout-link:hover {
+    color: #ff0000;
+    text-decoration: underline;
+}
+
+.footer {
+    margin-top: auto;
+    padding: 10px 0;
+    font-size: 0.9em;
+    color: #7f8c8d;
+}

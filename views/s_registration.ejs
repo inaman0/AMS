@@ -4,35 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration</title>
+    <link rel="stylesheet" href="s_registration.css"> <!-- Link to the external CSS -->
 </head>
 <body>
-    <h1>Course Registration</h1>
-    <form id="course-form" action="/submit-registration" method="POST">
-        <input type="hidden" name="user_id" value="<%= userId %>">
-        <table>
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>Course Name</th>
-                    <th>Course Code</th>
-                    <th>Credits</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% courses.forEach(course => { %>
+    <div class="container">
+        <h1 class="heading">Course Registration</h1>
+        <form id="course-form" action="/submit-registration" method="POST" class="course-form">
+            <input type="hidden" name="user_id" value="<%= userId %>">
+            <table class="course-table">
+                <thead>
                     <tr>
-                        <td>
-                            <input type="checkbox" name="course_id" value="<%= course.course_id %>">
-                        </td>
-                        <td><%= course.course_name %></td>
-                        <td><%= course.course_code %></td>
-                        <td><%= course.credits %></td>
+                        <th>Select</th>
+                        <th>Course Name</th>
+                        <th>Course Code</th>
+                        <th>Credits</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
-        <button type="submit">Register</button>
-    </form>
-    <a href="/s_home">Homepage</a>
+                </thead>
+                <tbody>
+                    <% courses.forEach(course => { %>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="course_id" value="<%= course.course_id %>" class="course-checkbox">
+                            </td>
+                            <td><%= course.course_name %></td>
+                            <td><%= course.course_code %></td>
+                            <td><%= course.credits %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <div class="button-container">
+                <button type="submit" class="submit-button">Register</button>
+            </div>
+        </form>
+        <a href="/s_home" class="homepage-link">Homepage</a>
+    </div>
 </body>
 </html>

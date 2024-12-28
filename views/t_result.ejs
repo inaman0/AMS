@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Course</title>
+    <link rel="stylesheet" href="t_result.css"> <!-- Assuming your CSS is in styles.css -->
 </head>
 <body>
-    <h1>Select a Course</h1>
-    <form action="/view-students" method="GET">
-        <label for="course">Choose a course:</label>
-        <select id="course" name="courseId" required>
-            <% courses.forEach(course => { %>
-                <option value="<%= course.course_id %>">
-                    <%= course.course_name %> (<%= course.course_code %>)
-                </option>
-            <% }) %>
-        </select>
-        <button type="submit">View Students</button>
-    </form>
+    <div class="container">
+        <h1 class="heading">Select a Course</h1>
+        <form action="/view-students" method="GET" class="course-form">
+            <label for="course" class="label">Choose a course:</label>
+            <select id="course" name="courseId" class="course-select" required>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course.course_id %>">
+                        <%= course.course_name %> (<%= course.course_code %>)
+                    </option>
+                <% }) %>
+            </select>
+            <button type="submit" class="submit-button">View Students</button>
+            <a href="/t_home" class="homepage-link">Homepage</a>
+        </form>
+    </div>
 </body>
 </html>

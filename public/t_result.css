@@ -1,0 +1,78 @@
+/* Container for the entire page */
+.container {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("/images/teacher.jpg");
+    background-size: cover; /* Ensures the background image covers the entire page */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background image fixed while scrolling */
+}
+
+/* Styling for the page heading */
+.heading {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+/* Form container */
+.course-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Label styling */
+.label {
+    color: #34495e;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Select dropdown styling */
+.course-select {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Submit button styling */
+.submit-button {
+    padding: 12px 30px;
+    background-color: #3c5cc3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #2f489d;
+}
+.homepage-link {
+    margin-top: 20px;
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+.homepage-link:hover {
+    text-decoration: underline;
+}
+
