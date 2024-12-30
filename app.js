@@ -603,7 +603,7 @@ app.get('/results', (req, res) => {
     if (!studentId) {
         return res.status(400).send('Student not logged in.');
     }
-    console.log(studentId);
+    //console.log(studentId);
 
     connection.promise().query(`SELECT r.course_id, r.grade, c.course_name, c.course_id
                              FROM results r 
